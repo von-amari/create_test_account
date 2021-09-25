@@ -1,0 +1,42 @@
+//***make sure to map all required fields!***
+
+firstNameList = {"Concrete","Wood","Stairs","Flooring","Door","Frame","Orange","Metal","Vaccuum","Piano"};
+lastNameList = {"Inc.","Financial","Company","County","Sales","Electronics","Bank","World","Land","Insurance"};
+cityList = {"Atlanta","Salt Lake City","Tucson","Columbia","Killen","Thibodaux","Anniston","New York City","Fayetteville","Reno","Lucerne Valley","Tampa"};
+streetType = {"Lane","Frontage Road","Circle","Blvd","Street","Way","Drive","Alley","Avenue","Plaza","Terrace","Court"};
+stateList = {"GA","UT","AZ","SC","TX","LA","AL","NY","NC","NV","CA","FL"};
+acctTypeList = {"Analyst","Competitor","Distributor","Customer","Partner","Customer","Customer","Customer","Distributor","Customer","Customer"};
+randEight = null;
+phone = "";
+area = null;
+zip = null;
+
+//generate random phone number, uses parts of the phone number to generate a street number and zip code
+for each index i in firstNameList
+{
+	randEight = randomNumber(0,9);
+	phone = concat(phone,randEight);
+	if(phone.length() == 3)
+	{
+		area = phone;
+	}
+	if(phone.length() == 5)
+	{
+		zip = phone;
+	}
+}
+
+firstName = firstNameList.get(randEight);
+lastName = lastNameList.get(randEight);
+city = cityList.get(randEight);
+state = stateList.get(randEight);
+website = "http://www." + firstName + lastName + ".com";
+street = area + " " + lastName + " " + streetType.get(randEight);
+
+account_map = {"Account_Name":firstName + " " + lastName + "(Test Account)","Billing_City":city,"Billing_State":state,"Website":website,"Phone":phone.toString(),"Billing_Street":street,"Billing_Country":"United States","Billing_Code":zip,"Account_Type":acctTypeList.get(randEight)};
+response = zoho.crm.createRecord("Accounts",account_map);
+info randEight;
+info phone;
+info area;
+return "Test Account Created. Refresh screen to see added account.";
+// return response;
